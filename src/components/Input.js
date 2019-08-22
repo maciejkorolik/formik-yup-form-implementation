@@ -23,6 +23,7 @@ const Input = styled.input`
   }
   &[type='time'] {
     width: 80px;
+    margin-right: 10px;
     &::-webkit-clear-button {
       display: none;
     }
@@ -30,6 +31,7 @@ const Input = styled.input`
       display: none;
     }
   }
+
   &[type='radio'] {
     width: 18px;
     height: 18px;
@@ -49,7 +51,7 @@ export const RadioLabel = styled.label`
   font-size: ${({ theme }) => theme.fontSize.s};
   font-family: 'Open sans', sans-serif;
   color: ${({ theme }) => theme.darkGray};
-  padding: 0 5px;
+  padding: 0 10px 0 5px;
   position: relative;
   &::before {
     content: '';

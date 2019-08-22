@@ -5,9 +5,11 @@ import Header from '../components/Header';
 
 const StyledWrapper = styled.div`
   width: 100%;
-  max-width: 1100px;
   margin: 120px auto 0 auto;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const NewItemTemplate = ({ children }) => (

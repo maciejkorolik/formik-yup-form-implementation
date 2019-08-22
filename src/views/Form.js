@@ -7,10 +7,11 @@ import Textarea from '../components/Textarea';
 import Select from '../components/Select';
 import Label from '../components/Label';
 import ErrorMark from '../components/ErrorMark';
+import Button from '../components/Button';
 
 const FormRow = styled.div`
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 3fr 1fr;
   align-items: start;
   grid-gap: 10px;
   margin: 5px 0;
@@ -25,6 +26,13 @@ const SmallDescription = styled.div`
   font-weight: ${({ theme }) => theme.regular};
   font-style: italic;
   color: ${({ theme }) => theme.lightGray};
+`;
+
+const StyledSpan = styled.span`
+  font-size: ${({ theme }) => theme.fontSize.s};
+  font-family: 'Open sans', sans-serif;
+  color: ${({ theme }) => theme.darkGray};
+  padding: 0 10px;
 `;
 
 const Form = () => (
@@ -63,17 +71,59 @@ const Form = () => (
       <FormRow>
         <Label>payment</Label>
         <div>
-          <Input type="radio" name="radio" id="payment" />
-          <RadioLabel htmlFor="payment">payment</RadioLabel>
-          <Input type="radio" name="radio" id="payment2" />
-          <RadioLabel htmlFor="payment2">payment2</RadioLabel>
+          <Input type="radio" name="payment" id="payment-free" />
+          <RadioLabel htmlFor="payment-free">Free event</RadioLabel>
+          <Input type="radio" name="payment" id="payment-paid" />
+          <RadioLabel htmlFor="payment-paid">Paid Event</RadioLabel>
+          <Input type="text" width="100px" placeholder="Fee" />
+          <StyledSpan>$</StyledSpan>
         </div>
       </FormRow>
       <FormRow>
         <Label>reward</Label>
-        <Input type="text" width="100px" />
+        <div>
+          <Input type="text" width="100px" placeholder="Number" />
+          <StyledSpan>reward points for attendance</StyledSpan>
+        </div>
       </FormRow>
     </FormPanel>
+    <FormPanel name="Coordinator">
+      <FormRow>
+        <Label required>responsible</Label>
+        <Select>
+          <option>asdf</option>
+          <option>asdf</option>
+          <option>asdf</option>
+          <option>asdf</option>
+        </Select>
+      </FormRow>
+      <FormRow>
+        <Label>email</Label>
+        <Input type="text" placeholder="Email" />
+      </FormRow>
+    </FormPanel>
+    <FormPanel name="When">
+      <FormRow>
+        <Label required>starts on</Label>
+        <div>
+          <Input type="date" />
+          <StyledSpan>at</StyledSpan>
+          <Input type="time" />
+          <Input type="radio" name="ampm" id="ampm-am" />
+          <RadioLabel htmlFor="ampm-am">AM</RadioLabel>
+          <Input type="radio" name="ampm" id="ampm-pm" />
+          <RadioLabel htmlFor="ampm-pm">PM</RadioLabel>
+        </div>
+      </FormRow>
+      <FormRow>
+        <Label>duration</Label>
+        <div>
+          <Input type="text" width="100px" placeholder="Number" />
+          <StyledSpan>hour</StyledSpan>
+        </div>
+      </FormRow>
+    </FormPanel>
+    <Button>publish event</Button>
   </NewItemTemplate>
 );
 

@@ -30,8 +30,8 @@ const Heading = styled.h1`
   color: white;
   width: 100%;
   max-width: 1000px;
-  margin: 0;
-  padding: 0 20px;
+  margin: 0 20px;
+  padding: 0 40px;
   font-size: ${({ theme }) => theme.fontSize.xl};
   font-weight: ${({ theme }) => theme.thin};
 `;
