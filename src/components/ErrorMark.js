@@ -10,7 +10,7 @@ const ErrorMark = styled.div`
   background-color: ${({ theme }) => theme.error};
   color: white;
   font-size: ${({ theme }) => theme.fontSize.xs};
-  line-height: 1;
+  line-height: 1.2;
   justify-self: left;
   position: relative;
 

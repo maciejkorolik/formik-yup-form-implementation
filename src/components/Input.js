@@ -8,6 +8,7 @@ const Input = styled.input`
 
   &[type='date'] {
     width: 160px;
+    color: ${({ theme, value }) => (value ? theme.darkGray : theme.lightGray)};
     &::-webkit-clear-button {
       display: none;
     }
@@ -24,6 +25,7 @@ const Input = styled.input`
   &[type='time'] {
     width: 80px;
     margin-right: 10px;
+    color: ${({ theme, value }) => (value ? theme.darkGray : theme.lightGray)};
     &::-webkit-clear-button {
       display: none;
     }

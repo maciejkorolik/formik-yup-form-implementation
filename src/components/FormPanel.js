@@ -12,7 +12,7 @@ const StyledWrapper = styled.div`
   margin: 0 auto 20px auto;
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const FormHeader = styled.h2`

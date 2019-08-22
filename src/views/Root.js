@@ -4,8 +4,8 @@ import { ThemeProvider } from 'styled-components';
 import GlobalStyle from '../theme/GlobalStyle';
 import { theme } from '../theme/mainTheme';
 import { routes } from '../routes';
-import Form from './Form';
-import Success from './Success';
+import FormView from './FormView';
+import SuccessView from './SuccessView';
 import 'typeface-open-sans';
 
 const Root = () => (
@@ -14,8 +14,8 @@ const Root = () => (
     <ThemeProvider theme={theme}>
       <Switch>
         <Route exact path={routes.home} render={() => <Redirect to={routes.form} />} />
-        <Route exact path={routes.form} component={Form} />
-        <Route exact path={routes.success} component={Success} />
+        <Route exact path={routes.form} component={FormView} />
+        <Route exact path={routes.success} component={SuccessView} />
       </Switch>
     </ThemeProvider>
   </BrowserRouter>
