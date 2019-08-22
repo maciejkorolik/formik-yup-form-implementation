@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import NewItemTemplate from '../templates/NewItemTemplate';
 import FormPanel from '../components/FormPanel';
-import Input from '../components/Input';
+import Input, { RadioLabel } from '../components/Input';
 import Textarea from '../components/Textarea';
 import Select from '../components/Select';
 import Label from '../components/Label';
@@ -63,8 +63,10 @@ const Form = () => (
       <FormRow>
         <Label>payment</Label>
         <div>
-          <Input type="radio" name="radio" />
-          <Input type="radio" name="radio" />
+          <Input type="radio" name="radio" id="payment" />
+          <RadioLabel htmlFor="payment">payment</RadioLabel>
+          <Input type="radio" name="radio" id="payment2" />
+          <RadioLabel htmlFor="payment2">payment2</RadioLabel>
         </div>
       </FormRow>
       <FormRow>

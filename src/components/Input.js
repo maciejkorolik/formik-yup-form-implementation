@@ -33,28 +33,34 @@ const Input = styled.input`
   &[type='radio'] {
     width: 18px;
     height: 18px;
-    padding: 0;
-    margin: 5px;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    border-radius: 50%;
-    border: 2px solid ${({ theme }) => theme.lightBlue};
-    position: relative;
-    &:checked {
-      width: 18px;
-      height: 18px;
-      &::after {
-        content: '';
-        background-color: ${({ theme }) => theme.lightBlue};
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        position: absolute;
-        top: 4px;
-        left: 4px;
-      }
+    opacity: 0;
+    &:checked + label::before {
+      background: radial-gradient(
+        ${({ theme }) => theme.lightBlue},
+        ${({ theme }) => theme.lightBlue} 40%,
+        white 40%,
+        white 100%
+      );
     }
+  }
+`;
+
+export const RadioLabel = styled.label`
+  font-size: ${({ theme }) => theme.fontSize.s};
+  font-family: 'Open sans', sans-serif;
+  color: ${({ theme }) => theme.darkGray};
+  padding: 0 5px;
+  position: relative;
+  &::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 3px;
+    left: -18px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid ${({ theme }) => theme.lightBlue};
   }
 `;
 
