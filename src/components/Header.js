@@ -7,6 +7,7 @@ const StyledWrapper = styled.header`
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 9999;
 `;
 
 const Bar = styled.div`

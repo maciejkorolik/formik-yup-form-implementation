@@ -5,6 +5,7 @@ const ErrorMark = styled.div`
   min-height: 26px;
   width: auto;
   padding: 7px;
+  margin: 7px 0;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.error};
   color: white;

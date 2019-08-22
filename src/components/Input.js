@@ -1,30 +1,60 @@
 import styled from 'styled-components';
+import { inputStyle } from '../theme/mixins';
 
 const Input = styled.input`
   height: 40px;
   width: ${({ width }) => width || '100%'};
-  padding: 10px;
-  margin: 0;
-  font-size: ${({ theme }) => theme.fontSize.s};
-  font-family: 'Roboto', sans-serif;
-  background-color: white;
-  border-radius: 4px;
-  border: 1px solid ${({ theme }) => theme.lightGray};
-  outline: none;
-  color: ${({ theme }) => theme.darkGray};
+  ${({ theme }) => inputStyle(theme)};
 
-  &:focus {
-    outline: none;
-    border: 1px solid ${({ theme }) => theme.lightBlue};
+  &[type='date'] {
+    width: 160px;
+    &::-webkit-clear-button {
+      display: none;
+    }
+    &::-webkit-inner-spin-button {
+      display: none;
+    }
+    &::-webkit-calendar-picker-indicator {
+      color: ${({ theme }) => theme.darkGray};
+      &:hover {
+        background: transparent;
+      }
+    }
   }
-
-  &:invalid {
-    outline: none;
-    border: 1px solid ${({ theme }) => theme.error};
+  &[type='time'] {
+    width: 80px;
+    &::-webkit-clear-button {
+      display: none;
+    }
+    &::-webkit-datetime-edit-ampm-field {
+      display: none;
+    }
   }
-
-  &::placeholder {
-    color: ${({ theme }) => theme.lightGray};
+  &[type='radio'] {
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    margin: 5px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 50%;
+    border: 2px solid ${({ theme }) => theme.lightBlue};
+    position: relative;
+    &:checked {
+      width: 18px;
+      height: 18px;
+      &::after {
+        content: '';
+        background-color: ${({ theme }) => theme.lightBlue};
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+      }
+    }
   }
 `;
 

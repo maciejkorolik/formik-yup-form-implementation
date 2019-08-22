@@ -6,7 +6,7 @@ import { theme } from '../theme/mainTheme';
 import { routes } from '../routes';
 import Form from './Form';
 import Success from './Success';
-import 'typeface-roboto';
+import 'typeface-open-sans';
 
 const Root = () => (
   <BrowserRouter>
