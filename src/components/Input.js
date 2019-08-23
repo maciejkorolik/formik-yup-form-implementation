@@ -4,10 +4,10 @@ import { inputStyle } from '../theme/mixins';
 const Input = styled.input`
   height: 40px;
   width: ${({ width }) => width || '100%'};
-  ${({ theme }) => inputStyle(theme)};
+  ${({ theme, error }) => inputStyle(theme, error)};
 
   &[type='date'] {
-    width: 160px;
+    width: 140px;
     color: ${({ theme, value }) => (value ? theme.darkGray : theme.lightGray)};
     &::-webkit-clear-button {
       display: none;
@@ -23,7 +23,7 @@ const Input = styled.input`
     }
   }
   &[type='time'] {
-    width: 80px;
+    width: 100px;
     margin-right: 10px;
     color: ${({ theme, value }) => (value ? theme.darkGray : theme.lightGray)};
     &::-webkit-clear-button {

@@ -1,7 +1,9 @@
+/* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Formik, Form, Field } from 'formik';
-import { newEventSchema } from '../validation/validationSchema';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import moment from 'moment';
+import { newEventSchema } from '../validation';
 import NewItemTemplate from '../templates/NewItemTemplate';
 import FormPanel from '../components/FormPanel';
 import Input, { RadioLabel } from '../components/Input';
@@ -91,6 +93,31 @@ class FormView extends Component {
 
   render() {
     const { userID, categories, currentUser, otherUsers } = this.state;
+    const formatValues = values => {
+      const newValues = JSON.parse(JSON.stringify(values));
+      const time = moment(`${values.time} ${values.ampm}`, 'hh:mm a').format('HH:mm');
+
+      newValues.paid_event = values.paid_event === 'true';
+      newValues.date = `${values.date}T${time}`;
+      if (values.duration) {
+        newValues.duration = values.duration * 60;
+      }
+      if (values.coordinator_email) {
+        newValues.coordinator = {
+          id: values.coordinator_id,
+          email: values.coordinator_email,
+        };
+      } else {
+        newValues.coordinator = {
+          id: values.coordinator_id,
+        };
+      }
+      delete newValues.coordinator_id;
+      delete newValues.coordinator_email;
+      delete newValues.time;
+      delete newValues.ampm;
+      return newValues;
+    };
     return (
       <NewItemTemplate>
         <Formik
@@ -99,35 +126,43 @@ class FormView extends Component {
             description: '',
             paid_event: 'false',
             ampm: 'am',
+            coordinator_id: userID,
           }}
           validationSchema={newEventSchema}
           onSubmit={(values, { resetForm }) => {
-            console.log(values);
+            const formattedValues = formatValues(values);
+            console.log(formattedValues);
             resetForm({});
           }}
         >
-          {({ values, handleChange, handleBlur }) => (
+          {({ values, errors, touched, handleChange, handleBlur }) => (
             <StyledForm>
               <FormPanel name="About">
                 <FormRow>
-                  <Label required>title</Label>
+                  <Label required error={errors.title && touched.title}>
+                    title
+                  </Label>
                   <Input
                     type="text"
                     name="title"
                     onChange={handleChange}
                     onBlur={handleBlur}
+                    error={errors.title && touched.title}
                     value={values.title || ''}
                     placeholder="Make it short and clear"
                   />
-                  <ErrorMark>This field is required</ErrorMark>
+                  <ErrorMessage component={ErrorMark} name="title" />
                 </FormRow>
                 <FormRow>
-                  <Label required>description</Label>
+                  <Label required error={errors.description && touched.description}>
+                    description
+                  </Label>
                   <div>
                     <Textarea
                       name="description"
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      error={errors.description && touched.description}
                       value={values.description || ''}
                       placeholder="Write about your event, be creative"
                     />
@@ -136,7 +171,7 @@ class FormView extends Component {
                       <span>{String(values.description).length}/140</span>
                     </SmallDescription>
                   </div>
-                  <ErrorMark>This field is required</ErrorMark>
+                  <ErrorMessage component={ErrorMark} name="description" />
                 </FormRow>
                 <FormRow>
                   <Label>category</Label>
@@ -160,9 +195,10 @@ class FormView extends Component {
                       Describes topic and people who should be interested in this event
                     </SmallDescription>
                   </div>
+                  <ErrorMessage component={ErrorMark} name="category" />
                 </FormRow>
                 <FormRow>
-                  <Label>payment</Label>
+                  <Label error={errors.event_fee && touched.event_fee}>payment</Label>
                   <div>
                     <Field
                       component={RadioGroup}
@@ -189,43 +225,54 @@ class FormView extends Component {
                       />
                       <RadioLabel htmlFor="payment-paid">Paid Event</RadioLabel>
                     </Field>
-                    <Input
-                      type="text"
-                      width="100px"
-                      placeholder="Fee"
-                      name="event_fee"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.event_fee || ''}
-                    />
-                    <StyledSpan>$</StyledSpan>
+                    {values.paid_event === 'true' ? (
+                      <>
+                        <Input
+                          type="text"
+                          width="100px"
+                          placeholder="Fee"
+                          name="event_fee"
+                          error={errors.event_fee && touched.event_fee}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.event_fee || ''}
+                        />
+                        <StyledSpan>$</StyledSpan>
+                      </>
+                    ) : null}
                   </div>
+                  <ErrorMessage component={ErrorMark} name="event_fee" />
                 </FormRow>
                 <FormRow>
-                  <Label>reward</Label>
+                  <Label error={errors.reward && touched.reward}>reward</Label>
                   <div>
                     <Input
                       type="text"
                       width="100px"
                       placeholder="Number"
                       name="reward"
+                      error={errors.reward && touched.reward}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.reward || ''}
                     />
                     <StyledSpan>reward points for attendance</StyledSpan>
                   </div>
+                  <ErrorMessage component={ErrorMark} name="reward" />
                 </FormRow>
               </FormPanel>
 
               <FormPanel name="Coordinator">
                 <FormRow>
-                  <Label required>responsible</Label>
+                  <Label required error={errors.coordinator_id && touched.coordinator_id}>
+                    responsible
+                  </Label>
                   <Select
                     name="coordinator_id"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.coordinator_id || userID}
+                    error={errors.coordinator_id && touched.coordinator_id}
                   >
                     <optgroup label="Me">
                       <option
@@ -242,27 +289,36 @@ class FormView extends Component {
                       ))}
                     </optgroup>
                   </Select>
+                  <ErrorMessage component={ErrorMark} name="coordinator_id" />
                 </FormRow>
                 <FormRow>
-                  <Label>email</Label>
+                  <Label error={errors.coordinator_email && touched.coordinator_email}>email</Label>
                   <Input
                     type="text"
                     placeholder="Email"
                     name="coordinator_email"
+                    error={errors.coordinator_email && touched.coordinator_email}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.coordinator_email || ''}
                   />
+                  <ErrorMessage component={ErrorMark} name="coordinator_email" />
                 </FormRow>
               </FormPanel>
 
               <FormPanel name="When">
                 <FormRow>
-                  <Label required>starts on</Label>
+                  <Label
+                    required
+                    error={(errors.date && touched.date) || (errors.time && touched.time)}
+                  >
+                    starts on
+                  </Label>
                   <div>
                     <Input
                       type="date"
                       name="date"
+                      error={errors.date && touched.date}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.date || ''}
@@ -272,11 +328,12 @@ class FormView extends Component {
                       type="time"
                       name="time"
                       max="12:59"
+                      error={errors.time && touched.time}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.time || ''}
                     />
-                    <Field component={RadioGroup} name="ampm" value={values.time_ampm || 'am'}>
+                    <Field component={RadioGroup} name="ampm" value={values.ampm || 'am'}>
                       <Input
                         type="radio"
                         name="ampm"
@@ -298,21 +355,27 @@ class FormView extends Component {
                       <RadioLabel htmlFor="ampm-pm">PM</RadioLabel>
                     </Field>
                   </div>
+                  <div>
+                    <ErrorMessage component={ErrorMark} name="date" />
+                    <ErrorMessage component={ErrorMark} name="time" />
+                  </div>
                 </FormRow>
                 <FormRow>
-                  <Label>duration</Label>
+                  <Label error={errors.duration && touched.duration}>duration</Label>
                   <div>
                     <Input
                       type="text"
                       width="100px"
                       placeholder="Number"
                       name="duration"
+                      error={errors.duration && touched.duration}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.duration || ''}
                     />
                     <StyledSpan>hour</StyledSpan>
                   </div>
+                  <ErrorMessage component={ErrorMark} name="duration" />
                 </FormRow>
               </FormPanel>
               <Button type="submit">publish event</Button>

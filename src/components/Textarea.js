@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { inputStyle } from '../theme/mixins';
 
 const Textarea = styled.textarea`
-  height: 180px;
+  height: 150px;
   width: 100%;
-  ${({ theme }) => inputStyle(theme)};
+  ${({ theme, error }) => inputStyle(theme, error)};
   resize: none;
 `;
 
