@@ -1,68 +1,31 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Hotree form implementation
+> Author: **Maciej Korolik**
 
-## Available Scripts
-
-In the project directory, you can run:
-
+## Project setup
+The project requires **node.js** installed.
+To install all packages, go to main project directory and run:
+### `npm install`
+To run the project with development server, run this in main directory:
 ### `npm start`
+This command will run the project on **localhost:3000**. <br>
+<br>
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
+To build the app for production, run:
 ### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Project overview
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+![Screenshot](readme-media/screenshot.jpg)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### **Most important features of the project:**
 
-### `npm run eject`
+* **Framework**  - [React.js](https://reactjs.org/) with standard create-react-app,
+* **Styling** - [styled-components](https://www.styled-components.com/) were used for styling the app. Most common style values are stored in main theme and they are used across all components. Fonts are installed via npm with [typefaces](https://github.com/KyleAMathews/typefaces). The app is fully responsible.
+* **Routing** - although the project now consists of only 2 views, if it was implemented in the full app, it would probably use router, so I decided to already implement it.
+* **Form** - the form, which is the main function of the project was created using [Formik](https://jaredpalmer.com/formik/). Most of the functionality of it is inside FormView component. Formik handles form data, errors, conditional rendering of error messages, etc. All input components are native HTML inputs, customized to match the app look.
+* **Validation** - for data validation I used [Yup](https://github.com/jquense/yup), which can be easily connected to the form made with Formik. Schema is stored in the separate file, it consists of some default Yup tests, as well as some custom validation needed for this specific form.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  <br>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+During development, [Eslint](https://eslint.org/) and [Prettier](https://prettier.io/) were used with [airbnb](https://www.npmjs.com/package/eslint-config-airbnb) config. To ensure that every commit is properly formatted and free of errors, [Husky](https://github.com/typicode/husky) was implemented with pre-commit hook.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

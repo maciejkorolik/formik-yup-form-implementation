@@ -13,12 +13,13 @@ export const newEventSchema = Yup.object().shape({
     is: 'true',
     then: Yup.number()
       .required('Fee is required for paid events')
-      .typeError('Fee must be a number')
+      .typeError('Fee must be a number (dot separated)')
       .positive('Fee must be a positive number'),
   }),
   reward: Yup.number()
     .typeError('Reward must be a number')
-    .positive('Reward must be a positive number'),
+    .positive('Reward must be a positive number')
+    .integer('Reward must be an integer number'),
   ampm: Yup.string()
     .oneOf(['am', 'pm'])
     .default('am'),
