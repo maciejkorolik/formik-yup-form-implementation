@@ -33,7 +33,6 @@ const Input = styled.input`
       display: none;
     }
   }
-
   &[type='radio'] {
     width: 18px;
     height: 18px;

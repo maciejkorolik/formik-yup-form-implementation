@@ -15,15 +15,15 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const NewItemTemplate = ({ children }) => (
+const NewEventTemplate = ({ children }) => (
   <>
     <Header>New event</Header>
     <StyledWrapper>{children}</StyledWrapper>
   </>
 );
 
-NewItemTemplate.propTypes = {
+NewEventTemplate.propTypes = {
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.node]).isRequired,
 };
 
-export default NewItemTemplate;
+export default NewEventTemplate;

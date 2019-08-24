@@ -13,7 +13,7 @@ const Button = styled.button`
   border: none;
   border-radius: 3px;
   outline: none;
-  background-color: ${({ theme }) => theme.orange};
+  background-color: ${({ theme, secondary }) => (secondary ? theme.blue : theme.orange)};
   color: white;
   font-size: ${({ theme }) => theme.fontSize.s};
   font-family: 'Open sans', sans-serif;

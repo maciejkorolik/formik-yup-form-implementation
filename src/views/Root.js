@@ -1,12 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
+import 'typeface-open-sans';
+
 import GlobalStyle from '../theme/GlobalStyle';
 import { theme } from '../theme/mainTheme';
 import { routes } from '../routes';
 import FormView from './FormView';
 import SuccessView from './SuccessView';
-import 'typeface-open-sans';
 
 const Root = () => (
   <BrowserRouter>

@@ -13,6 +13,7 @@ const ErrorMark = styled.div`
   line-height: 1.2;
   justify-self: left;
   position: relative;
+
   @media (max-width: 768px) {
     align-self: flex-start;
   }
@@ -27,6 +28,7 @@ const ErrorMark = styled.div`
     transform-origin: center;
     transform: rotate(45deg);
     background-color: ${({ theme }) => theme.error};
+
     @media (max-width: 768px) {
       left: 15px;
       top: -4px;

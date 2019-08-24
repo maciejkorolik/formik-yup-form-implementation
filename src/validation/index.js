@@ -26,6 +26,7 @@ export const newEventSchema = Yup.object().shape({
     .required('Date is required')
     .min(moment().format('YYYY-MM-DD'), 'Date cannot be before today'),
   time: Yup.mixed()
+    .required('Time is required')
     .test('maxTime', 'Time should be in 12h format', function(value) {
       return moment(value, 'HH:mm').isSameOrBefore(moment('12:59', 'HH:mm'));
     })
@@ -38,10 +39,8 @@ export const newEventSchema = Yup.object().shape({
         return check;
       }),
     }),
-
-  // @todo validation of time
   duration: Yup.number()
-    .typeError('Duration must be a number')
+    .typeError('Duration must be a number (dot separated)')
     .positive('Duration must be a positive number'),
   coordinator_id: Yup.number().required('Coordinator is required'),
   coordinator_email: Yup.string().email('Wrong email format'),

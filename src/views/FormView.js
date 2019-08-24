@@ -4,8 +4,9 @@ import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import moment from 'moment';
+
 import { newEventSchema } from '../validation';
-import NewItemTemplate from '../templates/NewItemTemplate';
+import NewEventTemplate from '../templates/NewEventTemplate';
 import FormPanel from '../components/FormPanel';
 import Input, { RadioLabel } from '../components/Input';
 import Textarea from '../components/Textarea';
@@ -14,6 +15,7 @@ import Label from '../components/Label';
 import ErrorMark from '../components/ErrorMark';
 import Button from '../components/Button';
 
+// styled components for form layout:
 const StyledForm = styled(Form)`
   width: 100%;
   height: auto;
@@ -53,6 +55,7 @@ const StyledSpan = styled.span`
   font-size: ${({ theme }) => theme.fontSize.s};
   font-family: 'Open sans', sans-serif;
   color: ${({ theme }) => theme.darkGray};
+  line-height: 1.7;
   padding: 0 10px;
 `;
 
@@ -63,8 +66,9 @@ const RadioGroup = styled.div`
   align-items: center;
 `;
 
+// actual FormView component starts here:
+
 class FormView extends Component {
-  // eslint-disable-next-line react/state-in-constructor
   state = {
     userID: 3,
     categories: [],
@@ -104,10 +108,10 @@ class FormView extends Component {
   render() {
     const { userID, categories, currentUser, otherUsers, success } = this.state;
 
+    // function for formatting form values to the appropriate data structure:
     const formatValues = values => {
       const newValues = JSON.parse(JSON.stringify(values));
       const time = moment(`${values.time} ${values.ampm}`, 'hh:mm a').format('HH:mm');
-
       newValues.paid_event = values.paid_event === 'true';
       newValues.date = `${values.date}T${time}`;
       if (values.duration) {
@@ -123,6 +127,10 @@ class FormView extends Component {
           id: values.coordinator_id,
         };
       }
+      // remove not needed values
+      if (!newValues.paid_event) {
+        delete newValues.event_fee;
+      }
       delete newValues.coordinator_id;
       delete newValues.coordinator_email;
       delete newValues.time;
@@ -130,15 +138,20 @@ class FormView extends Component {
       return newValues;
     };
 
+    // show success view on successful submit of a form
     if (success) return <Redirect to="/success" />;
+    // else: render form
     return (
-      <NewItemTemplate>
+      <NewEventTemplate>
         <Formik
           initialValues={{
             title: '',
             description: '',
             paid_event: 'false',
+            event_fee: '',
             ampm: 'am',
+            time: '',
+            date: '',
             coordinator_id: userID,
           }}
           validationSchema={newEventSchema}
@@ -243,7 +256,7 @@ class FormView extends Component {
                       <>
                         <Input
                           type="text"
-                          width="100px"
+                          width="70px"
                           placeholder="Fee"
                           name="event_fee"
                           error={errors.event_fee && touched.event_fee}
@@ -262,7 +275,7 @@ class FormView extends Component {
                   <div>
                     <Input
                       type="text"
-                      width="100px"
+                      width="90px"
                       placeholder="Number"
                       name="reward"
                       error={errors.reward && touched.reward}
@@ -380,7 +393,7 @@ class FormView extends Component {
                   <div>
                     <Input
                       type="text"
-                      width="100px"
+                      width="90px"
                       placeholder="Number"
                       name="duration"
                       error={errors.duration && touched.duration}
@@ -397,7 +410,7 @@ class FormView extends Component {
             </StyledForm>
           )}
         </Formik>
-      </NewItemTemplate>
+      </NewEventTemplate>
     );
   }
 }

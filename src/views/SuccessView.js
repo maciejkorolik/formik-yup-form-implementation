@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
-import NewItemTemplate from '../templates/NewItemTemplate';
+import NewEventTemplate from '../templates/NewEventTemplate';
+import Button from '../components/Button';
 
 const SuccessPanel = styled.div`
   width: 100%;
@@ -31,13 +33,32 @@ const SuccessPanel = styled.div`
   }
 `;
 
-const Success = () => (
-  <NewItemTemplate>
-    <SuccessPanel>
-      <h2>Success</h2>
-      <p>Event has been created</p>
-    </SuccessPanel>
-  </NewItemTemplate>
-);
+class SuccessView extends Component {
+  state = {
+    goBack: false,
+  };
 
-export default Success;
+  handleClick = () => {
+    this.setState({ goBack: true });
+  };
+
+  render() {
+    const { goBack } = this.state;
+
+    return goBack ? (
+      <Redirect to="/form" />
+    ) : (
+      <NewEventTemplate>
+        <SuccessPanel>
+          <h2>Success</h2>
+          <p>Event has been created</p>
+        </SuccessPanel>
+        <Button secondary onClick={this.handleClick}>
+          Create another event
+        </Button>
+      </NewEventTemplate>
+    );
+  }
+}
+
+export default SuccessView;
