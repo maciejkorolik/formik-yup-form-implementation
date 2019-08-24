@@ -26,20 +26,19 @@ export const newEventSchema = Yup.object().shape({
     .required('Date is required')
     .min(moment().format('YYYY-MM-DD'), 'Date cannot be before today'),
   time: Yup.mixed()
-    .required('Time is required')
     .test('maxTime', 'Time should be in 12h format', function(value) {
       return moment(value, 'HH:mm').isSameOrBefore(moment('12:59', 'HH:mm'));
+    })
+    .when('date', {
+      is: date => date && moment(date).isSame(moment(), 'day'),
+      then: Yup.string().test('minTime', 'Time cannot be before now', function(value) {
+        const { ampm } = this.options.parent;
+        const submittedTime = moment(`${value} ${ampm}`, 'hh:mm a');
+        const check = submittedTime.isAfter(moment());
+        return check;
+      }),
     }),
-  // .test('minTime', 'Time cannot be before now', function(value) {
-  //   const { ampm, date } = this.options.parent;
-  //   const currentTime = moment().format('HH:mm');
-  //   const submittedTime = moment(`${value} ${ampm}`, 'hh:mm a');
-  //   console.log(moment(date).isSame(moment(), 'day'));
-  //   if (moment(date).isSame(moment(), 'day')) {
-  //     return currentTime.isSameOrBefore(submittedTime);
-  //   }
-  //   return true;
-  // }),
+
   // @todo validation of time
   duration: Yup.number()
     .typeError('Duration must be a number')
