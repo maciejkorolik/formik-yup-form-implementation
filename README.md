@@ -5,10 +5,9 @@
 The project requires **node.js** installed.
 To install all packages, go to main project directory and run:
 ### `npm install`
-To run the project with development server, run this in main directory:
+To run the project with development server, run this in main directory: (this command will run the project on **localhost:3000**)
 ### `npm start`
-This command will run the project on **localhost:3000**. <br>
-<br>
+ <br>
 
 To build the app for production, run:
 ### `npm run build`
