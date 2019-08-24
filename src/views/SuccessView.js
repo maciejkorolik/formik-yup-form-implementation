@@ -26,6 +26,9 @@ const SuccessPanel = styled.div`
     font-size: ${({ theme }) => theme.fontSize.s};
     color: ${({ theme }) => theme.darkGray};
   }
+  @media (max-width: 480px) {
+    padding: 20px;
+  }
 `;
 
 const Success = () => (

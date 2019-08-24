@@ -10,6 +10,9 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (max-width: 480px) {
+    padding: 10px;
+  }
 `;
 
 const NewItemTemplate = ({ children }) => (

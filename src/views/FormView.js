@@ -1,5 +1,6 @@
-/* eslint-disable class-methods-use-this */
+/* eslint-disable no-console */
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import moment from 'moment';
@@ -29,6 +30,12 @@ const FormRow = styled.div`
   align-items: start;
   grid-gap: 10px;
   margin: 5px 0;
+  min-height: 40px;
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
 `;
 const SmallDescription = styled.div`
   display: flex;
@@ -51,7 +58,9 @@ const StyledSpan = styled.span`
 
 const RadioGroup = styled.div`
   display: inline-flex;
+  min-height: 50px;
   flex-direction: row;
+  align-items: center;
 `;
 
 class FormView extends Component {
@@ -61,6 +70,7 @@ class FormView extends Component {
     categories: [],
     currentUser: {},
     otherUsers: [],
+    success: false,
   };
 
   componentDidMount() {
@@ -92,7 +102,8 @@ class FormView extends Component {
   }
 
   render() {
-    const { userID, categories, currentUser, otherUsers } = this.state;
+    const { userID, categories, currentUser, otherUsers, success } = this.state;
+
     const formatValues = values => {
       const newValues = JSON.parse(JSON.stringify(values));
       const time = moment(`${values.time} ${values.ampm}`, 'hh:mm a').format('HH:mm');
@@ -118,6 +129,8 @@ class FormView extends Component {
       delete newValues.ampm;
       return newValues;
     };
+
+    if (success) return <Redirect to="/success" />;
     return (
       <NewItemTemplate>
         <Formik
@@ -133,6 +146,7 @@ class FormView extends Component {
             const formattedValues = formatValues(values);
             console.log(formattedValues);
             resetForm({});
+            this.setState({ success: true });
           }}
         >
           {({ values, errors, touched, handleChange, handleBlur }) => (
@@ -318,6 +332,7 @@ class FormView extends Component {
                     <Input
                       type="date"
                       name="date"
+                      min={moment().format('YYYY-MM-DD')}
                       error={errors.date && touched.date}
                       onChange={handleChange}
                       onBlur={handleBlur}

@@ -18,11 +18,17 @@ const Bar = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: 480px) {
+    height: 70px;
+  }
   ${({ top }) =>
     top &&
     css`
       height: 20px;
       background-color: ${({ theme }) => theme.darkBlue};
+      @media (max-width: 480px) {
+        height: 10px;
+      }
     `}
 `;
 
@@ -33,7 +39,10 @@ const Heading = styled.h1`
   margin: 0 20px;
   padding: 0 40px;
   font-size: ${({ theme }) => theme.fontSize.xl};
-  font-weight: ${({ theme }) => theme.thin};
+  font-weight: ${({ theme }) => theme.light};
+  @media (max-width: 480px) {
+    padding: 0;
+  }
 `;
 
 const Header = ({ children }) => (

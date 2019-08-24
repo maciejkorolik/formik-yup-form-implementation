@@ -8,7 +8,6 @@ export const theme = {
   error: '#FFB2B2',
   lightGray: '#D1D1D1',
   darkGray: '#767676',
-  thin: 200,
   light: 300,
   regular: 400,
   semibold: 600,
