@@ -12,7 +12,7 @@ export const inputStyle = (theme, error) => {
 
     &:focus {
       outline: none;
-      border: 1px solid ${theme.lightBlue};
+      border: 1px solid ${error ? theme.error : theme.lightBlue};
     }
     &:invalid {
       outline: none;

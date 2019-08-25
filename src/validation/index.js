@@ -5,7 +5,7 @@ import moment from 'moment';
 export const newEventSchema = Yup.object().shape({
   title: Yup.string().required('Title cannot be empty'),
   description: Yup.string()
-    .max(140, 'Too Long!')
+    .max(140, 'Too long! (max 140 characters)')
     .required('Description cannot be empty'),
   category_id: Yup.number(),
   paid_event: Yup.string().default('false'),
@@ -19,7 +19,7 @@ export const newEventSchema = Yup.object().shape({
   reward: Yup.number()
     .typeError('Reward must be a number')
     .positive('Reward must be a positive number')
-    .integer('Reward must be an integer number'),
+    .integer('Reward must be an integer'),
   ampm: Yup.string()
     .oneOf(['am', 'pm'])
     .default('am'),

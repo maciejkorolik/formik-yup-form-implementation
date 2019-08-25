@@ -48,7 +48,7 @@ const SmallDescription = styled.div`
   font-family: 'Open sans', sans-serif;
   font-weight: ${({ theme }) => theme.regular};
   font-style: italic;
-  color: ${({ theme }) => theme.lightGray};
+  color: ${({ theme, error }) => (error ? theme.error : theme.lightGray)};
 `;
 
 const StyledSpan = styled.span`
@@ -181,7 +181,7 @@ class FormView extends Component {
                   <ErrorMessage component={ErrorMark} name="title" />
                 </FormRow>
                 <FormRow>
-                  <Label required error={errors.description && touched.description}>
+                  <Label required error={errors.description}>
                     description
                   </Label>
                   <div>
@@ -189,16 +189,16 @@ class FormView extends Component {
                       name="description"
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={errors.description && touched.description}
+                      error={errors.description}
                       value={values.description || ''}
                       placeholder="Write about your event, be creative"
                     />
-                    <SmallDescription>
+                    <SmallDescription error={String(values.description).length > 140}>
                       <span>Max length: 140 characters</span>
                       <span>{String(values.description).length}/140</span>
                     </SmallDescription>
                   </div>
-                  <ErrorMessage component={ErrorMark} name="description" />
+                  {errors.description ? <ErrorMark>{errors.description}</ErrorMark> : null}
                 </FormRow>
                 <FormRow>
                   <Label>category</Label>
