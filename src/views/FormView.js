@@ -66,7 +66,7 @@ const RadioGroup = styled.div`
   align-items: center;
 `;
 
-// actual FormView component starts here:
+// ******** actual FormView component starts here:  *********
 
 class FormView extends Component {
   state = {
@@ -110,31 +110,32 @@ class FormView extends Component {
 
     // function for formatting form values to the appropriate data structure:
     const formatValues = values => {
-      const newValues = JSON.parse(JSON.stringify(values));
       const time = moment(`${values.time} ${values.ampm}`, 'hh:mm a').format('HH:mm');
-      newValues.paid_event = values.paid_event === 'true';
-      newValues.date = `${values.date}T${time}`;
-      if (values.duration) {
-        newValues.duration = values.duration * 60;
-      }
-      if (values.coordinator_email) {
-        newValues.coordinator = {
-          id: values.coordinator_id,
-          email: values.coordinator_email,
-        };
-      } else {
-        newValues.coordinator = {
-          id: values.coordinator_id,
-        };
-      }
-      // remove not needed values
-      if (!newValues.paid_event) {
-        delete newValues.event_fee;
-      }
-      delete newValues.coordinator_id;
-      delete newValues.coordinator_email;
-      delete newValues.time;
-      delete newValues.ampm;
+      const date = moment(values.date).format('YYYY-MM-DD');
+      // appropriate data structure
+      const newValues = {
+        title: values.title,
+        description: values.description,
+        category_id: Number(values.category_id) || null, // Formik and Yup return number values as strings (even after successfull validation of type "number")
+        paid_event: values.paid_event === 'true',
+        event_fee: Number(values.event_fee) || null,
+        reward: Number(values.reward) || null,
+        date: `${date}T${time}`,
+        duration: values.duration * 360 || null,
+        coordinator: {
+          email: values.coordinator_email || null,
+          id: String(values.coordinator_id), // According to specification in the task description, coordinator id on the output should be a string
+        },
+      };
+      // function for removing properties with null value
+      const removeNulls = obj =>
+        Object.entries(obj).forEach(([key, val]) => {
+          if (val && typeof val === 'object') removeNulls(val);
+          // eslint-disable-next-line no-param-reassign
+          else if (val == null) delete obj[key];
+        });
+      // remove nulls and return formatted data
+      removeNulls(newValues);
       return newValues;
     };
 
