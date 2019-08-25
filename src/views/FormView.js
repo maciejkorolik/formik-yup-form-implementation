@@ -222,7 +222,7 @@ class FormView extends Component {
                       value={values.category_id || ''}
                     >
                       <option value="" disabled hidden>
-                        Select category skills, interests, locations
+                        Select category &#40;skills, interests, locations&#41;
                       </option>
                       {categories.map(item => (
                         <option value={item.id} key={item.id}>
