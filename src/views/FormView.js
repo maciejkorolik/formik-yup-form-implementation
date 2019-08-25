@@ -181,7 +181,13 @@ class FormView extends Component {
                   <ErrorMessage component={ErrorMark} name="title" />
                 </FormRow>
                 <FormRow>
-                  <Label required error={errors.description}>
+                  <Label
+                    required
+                    error={
+                      (errors.description && values.description) ||
+                      (errors.description && touched.description)
+                    }
+                  >
                     description
                   </Label>
                   <div>
@@ -189,7 +195,10 @@ class FormView extends Component {
                       name="description"
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={errors.description}
+                      error={
+                        (errors.description && values.description) ||
+                        (errors.description && touched.description)
+                      }
                       value={values.description || ''}
                       placeholder="Write about your event, be creative"
                     />
@@ -198,7 +207,10 @@ class FormView extends Component {
                       <span>{String(values.description).length}/140</span>
                     </SmallDescription>
                   </div>
-                  {errors.description ? <ErrorMark>{errors.description}</ErrorMark> : null}
+                  {(errors.description && values.description) ||
+                  (errors.description && touched.description) ? (
+                    <ErrorMark>{errors.description}</ErrorMark>
+                  ) : null}
                 </FormRow>
                 <FormRow>
                   <Label>category</Label>
