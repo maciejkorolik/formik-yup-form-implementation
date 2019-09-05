@@ -1,6 +1,6 @@
 # Hotree form implementation
 
-> Author: **Maciej Korolik**
+> React form implementation done with Formik and Yup. Initially done as a reqruitment task.
 
 ## Project setup
 
