@@ -1,4 +1,4 @@
-# Hotree form implementation
+# Formik + Yup form implementation
 
 > React form implementation done with Formik and Yup. Initially done as a reqruitment task.
 
