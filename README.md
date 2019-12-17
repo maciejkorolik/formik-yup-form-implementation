@@ -1,6 +1,6 @@
 # Formik + Yup form implementation
 
-> React form implementation done with Formik and Yup. Initially done as a reqruitment task.
+> React form implementation done with Formik and Yup. Initially done as a recruitment task.
 
 ## Project setup
 
